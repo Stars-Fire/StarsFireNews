@@ -2,7 +2,7 @@ import requests
 import json
 from datetime import datetime
 
-SERVER = "http://127.0.0.1:20230/postdata"
+SERVER = "http://127.0.0.1:20230/"
 
 data = {
     "title": "test",

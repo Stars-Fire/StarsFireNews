@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>投稿页面</title>
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: left; /* 使内部元素居中显示 */
+    }
+    h1 {
+        color: #333;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: left; /* 使表单内元素居中 */
+        width: 100%;
+    }
+    label {
+        margin-top: 10px;
+        color: #555;
+        width: 100%; /* 使标签宽度为100% */
+        text-align: left; /* 标签文本左对齐 */
+    }
+    input[type="text"],
+    select,
+    textarea {
+        width: 50%; /* 设置文本框和选择框的宽度为页面宽度的50% */
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    textarea {
+        width: 80%; /* 设置文本域的宽度为页面宽度的80% */
+        resize: vertical;
+    }
+    input[type="submit"] {
+        width: 50%; /* 设置按钮宽度为页面宽度的50% */
+        padding: 15px;
+        margin-top: 20px;
+        background-color: #5cb85c;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        box-sizing: border-box;
+    }
+    input[type="submit"]:hover {
+        background-color: #4cae4c;
+    }
+</style>
+<script>
+// 获取当前时间的函数
+function getCurrentTime() {
+    var now = new Date();
+    var year = now.getFullYear();
+    var month = now.getMonth() + 1;
+    var day = now.getDate();
+    var hour = now.getHours();
+    var minute = now.getMinutes();
+    var second = now.getSeconds();
+    return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
+}
+
+// 发送数据到服务器的函数
+function submitForm() {
+    var author = document.getElementById('author').value;
+    var title = document.getElementById('title').value;
+    var content = document.getElementById('content').value;
+    var type = document.getElementById('type').value;
+    var time = getCurrentTime();
+
+    // 创建要发送的数据对象
+    var data = {
+        author: author,
+        title: title,
+        content: content,
+        type: type,
+        time: time
+    };
+
+    // 发送数据到服务器
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'https://api.starsfire.top/submit', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            alert('投稿成功！');
+        }
+    };
+    xhr.send(JSON.stringify(data));
+    return false; // 防止表单提交后的页面跳转
+}
+</script>
+</head>
+<body>
+<h1>投稿页面</h1>
+<form onsubmit="return submitForm()">
+    <label for="author">作者:</label><br>
+    <input type="text" id="author" name="author" required><br><br>
+
+    <label for="title">标题:</label><br>
+    <input type="text" id="title" name="title" required><br><br>
+
+    <label for="content">内容:</label><br>
+    <textarea id="content" name="content" required></textarea><br><br>
+
+    <label for="type">类型:</label><br>
+    <select id="type" name="type">
+        <option value="议论文">议论文</option>
+        <option value="小说">小说</option>
+        <option value="散文">散文</option>
+        <option value="新闻">新闻</option>
+        <option value="侧边栏">侧边栏</option>
+        <option value="诗">诗</option>
+        <option value="建议">建议</option>
+    </select><br><br>
+
+    <input type="submit" value="提交">
+</form>
+</body>
+</html>

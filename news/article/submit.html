@@ -95,11 +95,14 @@ function submitForm() {
 
     // 发送数据到服务器
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'https://api.starsfire.top/submit', true);
+    xhr.open('POST', 'https://submit.starsfire.top/submit', true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
             alert('投稿成功！');
+        }
+        else {
+            alert('投稿失败！服务器出错！');
         }
     };
     xhr.send(JSON.stringify(data));
